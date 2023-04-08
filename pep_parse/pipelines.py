@@ -3,11 +3,9 @@ from .settings import BASE_DIR
 
 
 class PepParsePipeline:
-    def __init__(self):
-        self.count_of_status = {}
 
     def open_spider(self, spider):
-        pass
+        self.count_of_status = {}
 
     def close_spider(self, spider):
         results_dir = BASE_DIR / 'results'
@@ -25,9 +23,5 @@ class PepParsePipeline:
 
     def process_item(self, item, spider):
         status = item['status']
-        count = self.count_of_status.get(status, 0)
-        if status not in self.count_of_status:
-            self.count_of_status[status] = count + 1
-        else:
-            self.count_of_status[status] += 1
+        self.count_of_status[status] = self.count_of_status.get(status, 0) + 1
         return item
